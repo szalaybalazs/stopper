@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
+
+// $red: #e24e1b;
+$red: #ff206e;
+div.stopper-wrapper {
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  width: 360px;
+  div.timer {
+    margin-bottom: 24px;
+    #time {
+      font-size: 56px;
+      font-weight: 500;
+    }
+    #round {
+      font-weight: 300;
+      font-size: 24px;
+    }
+  }
+  div.controls {
+    display: flex;
+    button {
+      width: 64px;
+      height: 64px;
+      appearance: none;
+      display: block;
+      border: none;
+      border-radius: 500px;
+      cursor: pointer;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-family: "Poppins", sans-serif;
+      margin-right: 24px;
+      background: #f4f4f4;
+      &.start {
+        color: darken(#0cf574, 10%);
+        background-color: transparentize(#0cf574, 0.8);
+      }
+      &.reset {
+        color: darken($red, 10%);
+        background-color: transparentize($red, 0.8);
+      }
+    }
+  }
+  div#splits {
+    margin-top: 24px;
+    div.split {
+      display: flex;
+      font-size: 16px;
+      &:not(:last-child) {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(#333, 0.2);
+      }
+      div.index {
+        margin-right: 12px;
+        font-weight: 500;
+      }
+      span {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+div.history-wrapper {
+  margin-top: 12px;
+  span.title {
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.6;
+  }
+  div.history {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-top: 8px;
+    &:hover {
+      span.label {
+        opacity: 0.8;
+      }
+    }
+    span.label {
+      opacity: 0;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+  }
+}

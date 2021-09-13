@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
+      div.stopper-wrapper {
+        font-family: "Poppins", sans-serif;
+        color: #333;
+        width: 360px;
+      }
+      div.stopper-wrapper div.timer {
+        margin-bottom: 24px;
+      }
+      div.stopper-wrapper div.timer #time {
+        font-size: 56px;
+        font-weight: 500;
+      }
+      div.stopper-wrapper div.timer #round {
+        font-weight: 300;
+        font-size: 24px;
+      }
+      div.stopper-wrapper div.controls {
+        display: flex;
+      }
+      div.stopper-wrapper div.controls button {
+        width: 64px;
+        height: 64px;
+        appearance: none;
+        display: block;
+        border: none;
+        border-radius: 500px;
+        cursor: pointer;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-size: 12px;
+        font-family: "Poppins", sans-serif;
+        margin-right: 24px;
+        background: #f4f4f4;
+      }
+      div.stopper-wrapper div.controls button.start {
+        color: #08c65d;
+        background-color: rgba(12, 245, 116, 0.2);
+      }
+      div.stopper-wrapper div.controls button.reset {
+        color: #ec0053;
+        background-color: rgba(255, 32, 110, 0.2);
+      }
+      div.stopper-wrapper div#splits {
+        margin-top: 24px;
+      }
+      div.stopper-wrapper div#splits div.split {
+        display: flex;
+        font-size: 16px;
+      }
+      div.stopper-wrapper div#splits div.split:not(:last-child) {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid rgba(51, 51, 51, 0.2);
+      }
+      div.stopper-wrapper div#splits div.split div.index {
+        margin-right: 12px;
+        font-weight: 500;
+      }
+      div.stopper-wrapper div#splits div.split span {
+        opacity: 0.8;
+      }
+
+      div.history-wrapper {
+        margin-top: 12px;
+      }
+      div.history-wrapper span.title {
+        font-size: 14px;
+        font-weight: 500;
+        opacity: 0.6;
+      }
+      div.history-wrapper div.history {
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        margin-top: 8px;
+      }
+      div.history-wrapper div.history:hover span.label {
+        opacity: 0.8;
+      }
+      div.history-wrapper div.history span.label {
+        opacity: 0;
+        text-transform: uppercase;
+        font-size: 14px;
+      }
+    </style>
+    <div class="stopper-wrapper">
+      <div class="timer">
+        <span id="time">00:00:00:00</span>
+        <div id="round">00:00:00:00</div>
+      </div>
+      <div class="controls">
+        <button class="start regular" id="start">
+          <span style="pointer-events: none">Start</span>
+        </button>
+        <button id="split">Split</button>
+        <button class="reset" id="reset">Reset</button>
+      </div>
+      <div id="splits"></div>
+      <div class="history-wrapper">
+        <span class="title">History</span>
+        <div id="history"></div>
+      </div>
+    </div>
+    <script>
+      const c = (t, s) => `
+        <div class="split">
+          <div class="index">#${t + 1}</div>
+          <span class="tile">${s}</span>
+        </div>
+      `;
+      const n = (t, s) => `
+        <div class="history" onclick="S(${t})">
+          <span class="tile">${s}</span>
+          <span class="label">continue</span>
+        </div>
+      `;
+      const t = "@stopper.recents";
+      const e = (t, s = 2) => `00000000${t}`.slice(-s);
+      let o = false;
+      let a = 0;
+      let l = 0;
+      let s = [];
+      let i = [];
+      const r = document.querySelector("#time");
+      const u = document.querySelector("#round");
+      const d = document.querySelector("#start");
+      const p = document.querySelector("#split");
+      const m = document.querySelector("#splits");
+      const $ = document.querySelector("#history");
+      const h = document.querySelector("#reset");
+      const v = () => {
+        o = !o;
+        if (o) g();
+      };
+      const f = () => {
+        i.unshift(a);
+        q();
+        O();
+        a = 0;
+        s = [];
+        o = false;
+        N();
+        J();
+      };
+      const S = (t) => {
+        a = t;
+        o = true;
+        g();
+      };
+      const g = () => {
+        l = window.performance.now();
+        k();
+        N();
+      };
+      const k = () => {
+        if (o) {
+          requestAnimationFrame(k);
+          d.children[0].innerText = o ? "Pause" : "Start";
+          d.className = o ? "start running" : "start regular";
+          const t = window.performance.now();
+          const s = t - l;
+          a += s;
+          l = t;
+          J();
+        }
+      };
+      const w = (t) => {
+        const s = t;
+        const n = s / 1e3;
+        const c = n / 60;
+        const o = c / 60;
+        return `${e(Math.floor(o))}:${e(Math.floor(c % 60))}:${e(
+          Math.floor(n % 60)
+        )}:${e(Math.floor(s % 1e3))}`;
+      };
+      const M = () => {
+        s.unshift(a);
+        N();
+        J();
+      };
+      let y;
+      const J = () => {
+        const t = Date.now();
+        if (y + 20 > t) return;
+        r.innerText = w(a);
+        u.innerText = w(a - (s[0] || 0));
+        y = t;
+      };
+      const N = () => {
+        const n = [...s];
+        m.innerHTML = n
+          .reverse()
+          .map((t, s) => c(s, w(t - (n[s - 1] || 0))))
+          .join("");
+      };
+      const O = () => {
+        if (i.length === 0) {
+          $.innerHTML = `<span class="empty">You have no recent timers</span>`;
+          return;
+        }
+        $.innerHTML = i
+          .slice(0, 10)
+          .map((t, s) => n(t, w(t)))
+          .join("");
+      };
+      const b = () => {
+        i = JSON.parse(localStorage.getItem(t) || "[]");
+      };
+      const q = () => {
+        localStorage.setItem(t, JSON.stringify(i));
+      };
+      b();
+      O();
+      d.addEventListener("click", v);
+      h.addEventListener("click", f);
+      p.addEventListener("click", M);
+    </script>
+  </body>
+</html>

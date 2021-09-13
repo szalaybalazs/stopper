@@ -1,0 +1,85 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap");
+div.stopper-wrapper {
+  font-family: "Poppins", sans-serif;
+  color: #333;
+  width: 360px;
+}
+div.stopper-wrapper div.timer {
+  margin-bottom: 24px;
+}
+div.stopper-wrapper div.timer #time {
+  font-size: 56px;
+  font-weight: 500;
+}
+div.stopper-wrapper div.timer #round {
+  font-weight: 300;
+  font-size: 24px;
+}
+div.stopper-wrapper div.controls {
+  display: flex;
+}
+div.stopper-wrapper div.controls button {
+  width: 64px;
+  height: 64px;
+  appearance: none;
+  display: block;
+  border: none;
+  border-radius: 500px;
+  cursor: pointer;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  margin-right: 24px;
+  background: #f4f4f4;
+}
+div.stopper-wrapper div.controls button.start {
+  color: #08c65d;
+  background-color: rgba(12, 245, 116, 0.2);
+}
+div.stopper-wrapper div.controls button.reset {
+  color: #ec0053;
+  background-color: rgba(255, 32, 110, 0.2);
+}
+div.stopper-wrapper div#splits {
+  margin-top: 24px;
+}
+div.stopper-wrapper div#splits div.split {
+  display: flex;
+  font-size: 16px;
+}
+div.stopper-wrapper div#splits div.split:not(:last-child) {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(51, 51, 51, 0.2);
+}
+div.stopper-wrapper div#splits div.split div.index {
+  margin-right: 12px;
+  font-weight: 500;
+}
+div.stopper-wrapper div#splits div.split span {
+  opacity: 0.8;
+}
+
+div.history-wrapper {
+  margin-top: 12px;
+}
+div.history-wrapper span.title {
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.6;
+}
+div.history-wrapper div.history {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  margin-top: 8px;
+}
+div.history-wrapper div.history:hover span.label {
+  opacity: 0.8;
+}
+div.history-wrapper div.history span.label {
+  opacity: 0;
+  text-transform: uppercase;
+  font-size: 14px;
+}
